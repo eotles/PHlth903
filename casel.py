@@ -4,7 +4,7 @@ Created on Jul 3, 2014
 @author: eotles
 '''
 import os
-from sets import Set as set
+#from sets import Set as set
 import math
 from munkres import Munkres
 import munkres
@@ -31,9 +31,11 @@ class Person(object):
     
     def putKinship(self, relative, kinshipCoefficient, recurs=True):
         if not(self.kinshipDict.get(kinshipCoefficient)):
-            self.kinshipDict.update({kinshipCoefficient : set()})
+            self.kinshipDict.update({kinshipCoefficient: []})
+            #self.kinshipDict.update({kinshipCoefficient : set()})
         relativesWithGivenKC = self.kinshipDict.get(kinshipCoefficient)
-        relativesWithGivenKC.add(relative)
+        relativesWithGivenKC += relative
+        #relativesWithGivenKC.add(relative)
         self.kinshipDict.update({kinshipCoefficient : relativesWithGivenKC})
         self.relatedTo.update({relative : kinshipCoefficient})
         if(recurs):
