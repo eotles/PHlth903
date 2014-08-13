@@ -89,6 +89,10 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
         controlsResidMap.update({contResid : cont})
     contFile.close()
     
+    print(neededControls)
+    print(len(controls))
+    print(len(cases))
+    
     if (neededControls >= len(controls)):
         #print(controls)
         print("Warning need more controls than available - returning all")
