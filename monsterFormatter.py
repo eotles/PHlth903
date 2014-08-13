@@ -26,7 +26,7 @@ famDict.put("0", 0)
 
 def autoCall(caseFilepath, contFilepath, selectedControlsList):
     [selectedCases, selectedControls] = loadCC(caseFilepath, contFilepath, selectedControlsList)
-    main(selectedCases, selectedControls)
+    return(main(selectedCases, selectedControls))
 
 #TODO: put all files generated in a temporary directory
 #TODO: add ability to run MONSTER directly
@@ -184,7 +184,7 @@ def main(selectedCases, selectedControls):
     KICFile.close()
     kinFile.close()
     
-    #return([phenoFilePath, genFilePath, SNPFilePath])
+    return([phenoFilePath, genFilePath, SNPFilePath])
             
 
 
