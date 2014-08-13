@@ -74,7 +74,7 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
         people.update({caseID : case})
         cases.append(case)
     caseFile.close()
-    neededControls = len(cases)*numberOfControlsPerCase
+    neededControls = (len(cases))*numberOfControlsPerCase
     
     #load controls
     contFile = open(contFilepath)
