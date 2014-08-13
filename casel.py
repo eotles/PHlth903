@@ -78,7 +78,9 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
     print(len(cases))
     print(numberOfControlsPerCase)
     print("-")
-    neededControls = (len(cases))*numberOfControlsPerCase
+    neededControls = 0
+    for case in cases:
+        neededControls += numberOfControlsPerCase
     
     #load controls
     contFile = open(contFilepath)
