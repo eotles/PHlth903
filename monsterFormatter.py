@@ -184,7 +184,7 @@ def main(selectedCases, selectedControls):
     KICFile.close()
     kinFile.close()
     
-    return([phenoFilePath, genFilePath, SNPFilePath])
+    return([phenoFilePath, genFilePath, SNPFilePath, kinFilePath])
             
 
 

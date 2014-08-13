@@ -35,10 +35,13 @@ def main():
     monFiles = monsterFormatter(caseFilepath, contFilepath, selectedControlsList)
     
     print(monFiles)
+    print(" /project/EngelmanGroup/GAW19/MONSTER/scr/./MONSTER "+ 
+                     " -p " + monFiles[0] + " -g " + monFiles[1] + " -s " + monFiles[2] +
+                     " -k " + monFiles[3])
     
     subprocess.call([" /project/EngelmanGroup/GAW19/MONSTER/scr/./MONSTER",
                      "-p", monFiles[0], "-g", monFiles[1], "-s", monFiles[2],
-                     "-k", kicFilepath])
+                     "-k", monFiles[3]])
     
 
 if __name__ == '__main__':
