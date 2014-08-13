@@ -24,22 +24,24 @@ indDict.put("0", 0)
 famDict = idTable()
 famDict.put("0", 0)
 
-def autoCall(caseFilepath, contFilepath, selectedControlsList):
+def autoCall(caseFilepath, contFilepath, kicFilepath, mapFilepath, selectedControlsList):
     [selectedCases, selectedControls] = loadCC(caseFilepath, contFilepath, selectedControlsList)
-    return(main(selectedCases, selectedControls))
+    return(main(selectedCases, selectedControls, kicFilepath, mapFilepath))
 
 #TODO: put all files generated in a temporary directory
 #TODO: add ability to run MONSTER directly
-def main(selectedCases, selectedControls):
+def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     
     currentWorkingDir = os.getcwd()
     pedFilePath = currentWorkingDir + "/PED.csv"
     phenoFilePath = currentWorkingDir + "/pheno.txt"
     doseFilePath = "/project/EngelmanGroup/GAW19/GAW19_data/FamilyDataSet/Genotype Files/DOSE/chr3-dose.csv/chr3-dose.csv"
     genFilePath = currentWorkingDir + "/geno.txt"
-    mapFilePath = "/project/EngelmanGroup/GAW19/chr3genoMAPPED.txt"
+    #mapFilePath = "/project/EngelmanGroup/GAW19/chr3genoMAPPED.txt"
+    mapFilePath = mapFilepath
     SNPFilePath = currentWorkingDir + "/SNP.txt"
-    KICFilePath = "/home/o/otles/KIC_out"
+    #KICFilePath = "/home/o/otles/KIC_out"
+    KICFilePath = kicFilepath
     kinFilePath = currentWorkingDir + "/kin.txt"
     
     geneListFilePath = currentWorkingDir + "/geneList.txt"
