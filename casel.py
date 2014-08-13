@@ -165,6 +165,8 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
                     break
   
     #print selected controls
+    print(cases)
+    print(selectedControls)
     print("\nFinal Control Selection (KIC = %f):" %kicScore(cases, selectedControls))
     for person in selectedControls:
         print(person.id)
