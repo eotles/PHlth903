@@ -63,8 +63,8 @@ def autoCall(caseFp, contFp, contRatio, kicFp):
             
 def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseFilepath = currDir + "/cases",contFilepath = currDir + "/controls"):
     numberOfControlsPerCase = int(numberOfControlsPerCase)
-    print(caseFilepath)
-    print(numberOfControlsPerCase)
+    #print(caseFilepath)
+    #print(numberOfControlsPerCase)
     #load cases
     caseFile = open(caseFilepath)
     next(caseFile)
@@ -75,11 +75,11 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
         people.update({caseID : case})
         cases.append(case)
     caseFile.close()
-    print("-")
-    print(len(cases))
-    print(numberOfControlsPerCase)
-    print("-")
-    neededControls = 0
+    #print("-")
+    #print(len(cases))
+    #print(numberOfControlsPerCase)
+    #print("-")
+    #neededControls = 0
     #for case in cases:
     #    neededControls += numberOfControlsPerCase
     neededControls = numberOfControlsPerCase*len(cases)
@@ -97,9 +97,9 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
         controlsResidMap.update({contResid : cont})
     contFile.close()
     
-    print(neededControls)
-    print(len(controls))
-    print(len(cases))
+    #print(neededControls)
+    #print(len(controls))
+    #print(len(cases))
     
     if (neededControls >= len(controls)):
         #print(controls)
@@ -165,8 +165,8 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
                     break
   
     #print selected controls
-    print(cases)
-    print(selectedControls)
+    #print(cases)
+    #print(selectedControls)
     print("\nFinal Control Selection (KIC = %f):" %kicScore(cases, selectedControls))
     for person in selectedControls:
         print(person.id)
