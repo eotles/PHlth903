@@ -173,7 +173,7 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
     #print("Final KIC score: %d" %kicScore(cases, selectedControls))
     #print([person.id for person in cases])
     #print([person.id for person in selectedControls])
-    return(selectedControls)
+    return([person.id for person in selectedControls])
 
 def hungarianAssignment(cases, controls, numberOfControlsPerCase):
     selectedControls = list()

@@ -191,8 +191,8 @@ def main(selectedCases, selectedControls):
 def convertLD(lineData):
     for i in xrange(1,4):
         newID = indDict.getIID(lineData[i])
-        if(newID == 37):
-            print(lineData[i])
+        #if(newID == 37):
+        #    print(lineData[i])
         lineData[i] = str(newID)
         
 def loadCC(caseFilepath, contFilepath, selectedControlsList):
