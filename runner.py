@@ -39,7 +39,7 @@ def main():
                      " -p " + monFiles[0] + " -g " + monFiles[1] + " -s " + monFiles[2] +
                      " -k " + monFiles[3])
     
-    subprocess.call([" /project/EngelmanGroup/GAW19/MONSTER/scr/./MONSTER"])
+    subprocess.call(["/project/EngelmanGroup/GAW19/MONSTER/scr/./MONSTER"])
     
 
 if __name__ == '__main__':
