@@ -196,7 +196,8 @@ def hungarianAssignment(cases, controls, numberOfControlsPerCase):
             selectedControls.append(controls[row%len(controls)])
     print('\tassignment kic score: %f' %(float(len(indexes)*convFactor-total)/convFactor))
     print("\tall kic score: %f" %(kicScore(cases, selectedControls)))
-    return([person.id for person in selectedControls])
+    #return([person.id for person in selectedControls])
+    return(selectedControls)
 
 def kicScore(cases, controlList):
     score = 0
