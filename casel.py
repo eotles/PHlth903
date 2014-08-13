@@ -62,6 +62,7 @@ def autoCall(caseFp, contFp, contRatio, kicFp):
     return main(contRatio, kicFp, caseFp, contFp)
             
 def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseFilepath = currDir + "/cases",contFilepath = currDir + "/controls"):
+    numberOfControlsPerCase = int(numberOfControlsPerCase)
     print(caseFilepath)
     print(numberOfControlsPerCase)
     #load cases
@@ -79,8 +80,9 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
     print(numberOfControlsPerCase)
     print("-")
     neededControls = 0
-    for case in cases:
-        neededControls += numberOfControlsPerCase
+    #for case in cases:
+    #    neededControls += numberOfControlsPerCase
+    neededControls = numberOfControlsPerCase*len(cases)
     
     #load controls
     contFile = open(contFilepath)
