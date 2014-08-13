@@ -32,7 +32,7 @@ def main():
     mapFilepath = args[4]
     
     selectedControlsList = casel(caseFilepath, contFilepath, contRatio, kicFilepath)
-    monFiles = monsterFormatter(caseFilepath, contFilepath, selectedControlsList, kicFilepath, mapFilepath)
+    monFiles = monsterFormatter(caseFilepath, contFilepath, kicFilepath, mapFilepath, selectedControlsList)
     
     #print(monFiles)
     print("run like this>>>> /project/EngelmanGroup/GAW19/MONSTER/scr/./MONSTER "+ 
