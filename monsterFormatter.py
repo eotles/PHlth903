@@ -145,7 +145,7 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             genFile.write("\t".join(dose) + "\n")
             if(lineData[823] in examine):
                 print("genFile:")
-                print("\t".join(dose) + "\n")
+                print(dose)
             #print(newLine)
             gene = str(lineData[823])
             snp = str(lineData[1] + "_" + lineData[2])
