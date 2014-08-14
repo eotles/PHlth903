@@ -101,6 +101,8 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     genFile.close()
     '''
     
+    examine = ["FAM131A;EIF4G1"]
+    
     #SNP map file
     geneMap = dict()
     print("Creating SNP file")
@@ -140,6 +142,8 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
                 #print(dose)
                 #lc+=1
             genFile.write("\t".join(dose) + "\n")
+            if(dose[0] in examine):
+                print("\t".join(dose) + "\n")
             #print(newLine)
             gene = str(lineData[823])
             snp = str(lineData[1] + "_" + lineData[2])
@@ -169,7 +173,7 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             geneString += "\n"
             SNPFile.write(geneString)
         #lets get to the bottom of the naughtiness
-        if(str(gene)=="BSN"):
+        if(str(gene) in examine):
             print(geneString)
     geneListFile.close()
     SNPFile.close()
