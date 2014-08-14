@@ -142,7 +142,8 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
                 #print(dose)
                 #lc+=1
             genFile.write("\t".join(dose) + "\n")
-            if(dose[0] in examine):
+            if(lineData[823] in examine):
+                print("genFile:")
                 print("\t".join(dose) + "\n")
             #print(newLine)
             gene = str(lineData[823])
@@ -174,6 +175,7 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             SNPFile.write(geneString)
         #lets get to the bottom of the naughtiness
         if(str(gene) in examine):
+            print("snp file:")
             print(geneString)
     geneListFile.close()
     SNPFile.close()
