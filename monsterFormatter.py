@@ -105,6 +105,7 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     
     #SNP map file
     geneMap = dict()
+    geneInteresting = dict()
     print("Creating SNP file")
     mapFile = open(mapFilePath)
     SNPFile = open(SNPFilePath, "w+")
@@ -148,8 +149,12 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             #print(newLine)
             gene = str(lineData[823])
             snp = str(lineData[1] + "_" + lineData[2])
+            if not (geneInteresting.has_key(gene)):
+                geneInteresting.update({gene: False})
+            if(max(count)>0):
+                geneInteresting.update({gene: True})
             if not(geneMap.has_key(gene)):
-                geneMap.update({gene : [snp]})
+                geneMap.update({gene : []})
             snpList = geneMap.get(gene)
             snpList.append(snp)
             geneMap.update({gene : snpList})
@@ -167,7 +172,8 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
         geneString = str(gene) + "\t0"
         #if(gene in naughtyList):
         #    #print(",".join(snpList))
-        if((len(snpList) < 1000) and not(gene in naughtyList)):
+        #if((len(snpList) < 1000) and not(gene in naughtyList)):
+        if((len(snpList) < 1000) and geneInteresting.get(gene)):
             #geneString += "\t".join(snpList)
             for snp in snpList:
                 geneString += "\t" + snp
