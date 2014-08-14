@@ -5,6 +5,7 @@ Created on Jul 21, 2014
 '''
 import os
 import sys
+from sets import Set as set
 
 from idTable import IDTable as idTable
 
@@ -106,6 +107,7 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     #SNP map file
     geneMap = dict()
     geneInteresting = dict()
+    geneIntList = set()
     print("Creating SNP file")
     mapFile = open(mapFilePath)
     SNPFile = open(SNPFilePath, "w+")
@@ -149,10 +151,11 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             #print(newLine)
             gene = str(lineData[823])
             snp = str(lineData[1] + "_" + lineData[2])
-            if not (geneInteresting.has_key(gene)):
-                geneInteresting.update({gene: False})
+            #if not (geneInteresting.has_key(gene)):
+            #    geneInteresting.update({gene: False})
             if(max(count)>0):
-                geneInteresting.update({gene: True})
+            #    geneInteresting.update({gene: True})
+                geneIntList.add(gene)
             if not(geneMap.has_key(gene)):
                 geneMap.update({gene : []})
             snpList = geneMap.get(gene)
@@ -173,7 +176,7 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
         #if(gene in naughtyList):
         #    #print(",".join(snpList))
         #if((len(snpList) < 1000) and not(gene in naughtyList)):
-        if((len(snpList) < 1000) and geneInteresting.get(gene)):
+        if((len(snpList) < 1000) and (gene in geneIntList)):
             #geneString += "\t".join(snpList)
             for snp in snpList:
                 geneString += "\t" + snp
