@@ -153,7 +153,7 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             snp = str(lineData[1] + "_" + lineData[2])
             #if not (geneInteresting.has_key(gene)):
             #    geneInteresting.update({gene: False})
-            if(max(count)>0):
+            if not(all(x == count[0] for x in count)):
             #    geneInteresting.update({gene: True})
                 geneIntList.add(gene)
             if not(geneMap.has_key(gene)):
@@ -183,6 +183,9 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             geneString += "\n"
             SNPFile.write(geneString)
         #lets get to the bottom of the naughtiness
+        if not (gene in geneIntList):
+            print("\tGene %s not interesting" %(gene))
+        
         if(str(gene) in examine):
             print("snp file:")
             print(geneString)
