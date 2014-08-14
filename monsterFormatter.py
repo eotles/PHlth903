@@ -168,6 +168,9 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
                 geneString += "\t" + snp
             geneString += "\n"
             SNPFile.write(geneString)
+        #lets get to the bottom of the naughtiness
+        if(str(gene)=="BSN"):
+            print(geneString)
     geneListFile.close()
     SNPFile.close()
     
