@@ -10,19 +10,6 @@ import subprocess
 from casel import autoCall as casel
 from monsterFormatter import autoCall as monsterFormatter
 
-#parser = argparse.ArgumentParser(description='Process a list of cases and ' +
-#                                 'potential controls, finding the best ' + 
-#                                 'controls, formatting input files for ' + 
-#                                 'and running MONSTER')
-#
-#parser.add_argument('caseFilepath', help='an integer for the accumulator')
-#parser.add_argument('contFilepath', help='an integer for the accumulator')
-#parser.add_argument('contRatio', help='an integer for the accumulator')
-#parser.add_argument('KICFilepath', help='an integer for the accumulator')
-#parser.add_argument('mapFilepath', help='an integer for the accumulator')
-
-#args = parser.parse_args()
-
 def main():
     args = sys.argv[1:]
     caseFilepath = args[0]
@@ -35,9 +22,8 @@ def main():
     monFiles = monsterFormatter(caseFilepath, contFilepath, kicFilepath, mapFilepath, selectedControlsList)
     
     #print(monFiles)
-    print("run like this>>>> /project/EngelmanGroup/GAW19/MONSTER/scr/./MONSTER "+ 
-                     " -p " + monFiles[0] + " -g " + monFiles[1] + " -s " + monFiles[2] +
-                     " -k " + monFiles[3])
+    print("run like this>>>> /project/EngelmanGroup/GAW19/MONSTER/scr/./MONSTER "+
+          "-p %s -g %s -s %s -k %s" %("pheno.txt", "geno.txt", "SNP.txt", "kin.txt"))
     
     #subprocess.call(["/project/EngelmanGroup/GAW19/MONSTER/scr/./MONSTER"])
     

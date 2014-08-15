@@ -55,17 +55,10 @@ class Person(object):
                 
 
 def autoCall(caseFp, contFp, contRatio, kicFp):
-    #caseFilepath = caseFp
-    #contFilepath = contFp
-    #numberOfControlsPerCase = contRatio
-    #KICoutFilepath = kicFp
     return main(contRatio, kicFp, caseFp, contFp)
             
 def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseFilepath = currDir + "/cases",contFilepath = currDir + "/controls"):
     numberOfControlsPerCase = int(numberOfControlsPerCase)
-    #print(caseFilepath)
-    #print(numberOfControlsPerCase)
-    #load cases
     caseFile = open(caseFilepath)
     next(caseFile)
     for caseData in caseFile:
@@ -75,13 +68,6 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
         people.update({caseID : case})
         cases.append(case)
     caseFile.close()
-    #print("-")
-    #print(len(cases))
-    #print(numberOfControlsPerCase)
-    #print("-")
-    #neededControls = 0
-    #for case in cases:
-    #    neededControls += numberOfControlsPerCase
     neededControls = numberOfControlsPerCase*len(cases)
     
     #load controls
@@ -96,10 +82,6 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
         controls.append(cont)
         controlsResidMap.update({contResid : cont})
     contFile.close()
-    
-    #print(neededControls)
-    #print(len(controls))
-    #print(len(cases))
     
     if (neededControls >= len(controls)):
         #print(controls)
@@ -164,15 +146,9 @@ def main(numberOfControlsPerCase = 2,KICoutFilepath = currDir + "/KIC_out",caseF
                 if(len(selectedControls) >= neededControls):
                     break
   
-    #print selected controls
-    #print(cases)
-    #print(selectedControls)
     print("\nFinal Control Selection (KIC = %f):" %kicScore(cases, selectedControls))
     for person in selectedControls:
         print(person.id)
-    #print("Final KIC score: %d" %kicScore(cases, selectedControls))
-    #print([person.id for person in cases])
-    #print([person.id for person in selectedControls])
     return([person.id for person in selectedControls])
 
 def hungarianAssignment(cases, controls, numberOfControlsPerCase):
@@ -208,7 +184,6 @@ def kicScore(cases, controlList):
                 score += related.get(case)
     return(score)
         
-
 
 if __name__ == '__main__':
     main()

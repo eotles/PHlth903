@@ -40,22 +40,19 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     phenoFilePath = currentWorkingDir + "/pheno.txt"
     doseFilePath = "/project/EngelmanGroup/GAW19/GAW19_data/FamilyDataSet/Genotype Files/DOSE/chr3-dose.csv/chr3-dose.csv"
     genFilePath = currentWorkingDir + "/geno.txt"
-    #mapFilePath = "/project/EngelmanGroup/GAW19/chr3genoMAPPED.txt"
     mapFilePath = mapFilepath
     SNPFilePath = currentWorkingDir + "/SNP.txt"
-    #KICFilePath = "/home/o/otles/KIC_out"
     KICFilePath = kicFilepath
     kinFilePath = currentWorkingDir + "/kin.txt"
-    
     geneListFilePath = currentWorkingDir + "/geneList.txt"
 
+    #remove naughty
     naughty = "T2DG0200075"
-
     if(selectedCases.has_key(naughty)):
         selectedCases.pop(naughty)
     if(selectedControls.has_key(naughty)):
         selectedControls.pop(naughty)
-
+        
     selected = selectedCases.keys() + selectedControls.keys()
     print("making inputs based on %d cases and %d controls" %(len(selectedCases), len(selectedControls)))
     
@@ -77,18 +74,14 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     pedFile.close()
     phenoFile.close()
     
-    examine = ["FAM131A;EIF4G1"]
-    
     #SNP map file
     geneMap = dict()
-    geneInteresting = dict()
     geneIntList = set()
     print("Loading SNP information")
     mapFile = open(mapFilePath)
     SNPFile = open(SNPFilePath, "w+")
     
     header = next(mapFile).strip().split("\t")
-    #print(header)
     newHeader = [0]
     goodCols = [0]
     for i,col in enumerate(header):
@@ -96,7 +89,6 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             newHeader.append(indDict.getIID(col))
             goodCols.append(i)
     
-    #print("sorting")
     newHeader, goodCols = (list(x) for x in zip(*sorted(zip(newHeader, goodCols))))
     newHeader = [str(i) for i in newHeader]
     
@@ -104,32 +96,19 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     print("Creating genotype file")
     genFile = open(genFilePath, "w+")
     genFile.write("\t".join(newHeader) + "\n")
-    lc = 0
     for line in mapFile:
         lineData = line.strip().split("\t")
         #ask burcu about this
         if(len(lineData) != 823):
-            newLine = [lineData[col] for col in goodCols]
             snp = str(lineData[1] + "_" + lineData[2])
             alt = lineData[4]
             count = [str(lineData[col].count(alt)) for col in goodCols]
             dose = [(lineData[1] + "_" + lineData[2])]
             dose = [snp] + count
-            #if(lc < 10):
-                #print(count)
-                #print(dose)
-                #lc+=1
             genFile.write("\t".join(dose) + "\n")
-            #if(lineData[823] in examine):
-            #    print("genFile:")
-            #    print(dose)
-            #print(newLine)
             gene = str(lineData[823])
             snp = str(lineData[1] + "_" + lineData[2])
-            #if not (geneInteresting.has_key(gene)):
-            #    geneInteresting.update({gene: False})
             if not(all(x == count[0] for x in count)):
-            #    geneInteresting.update({gene: True})
                 geneIntList.add(gene)
             if not(geneMap.has_key(gene)):
                 geneMap.update({gene : []})
@@ -140,10 +119,6 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     
     geneListFile = open(geneListFilePath, "w+")
     count = 0
-    
-    naughtyList = ["SNORA62", "RBM15B;MANF", "MIR6824", "MAGI1", "PCBP4;ABHD14B", "MBNL1", "MLH1;MLH1",
-                   "EIF4E3;GPR27", "FRG2C", "ZNF717", "TRAIP;CAMKV", "SCARNA7", "IQCF5", "EPHA3"]
-    
     print("Creating SNP file - excluding genes with no variation and with more than %s SNPs" %(MAXSNPSET))
     for gene,snpList in geneMap.iteritems():
         geneListFile.write(str(count) + "," + str(gene) +"\n")
@@ -160,7 +135,6 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             print("\tGene %s removed - too many SNPs for MONSTER" %(gene))
     geneListFile.close()
     SNPFile.close()
-    
     
     #Kinship file
     print("Creating kinship file")
