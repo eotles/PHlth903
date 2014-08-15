@@ -185,7 +185,7 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
         #lets get to the bottom of the naughtiness
         if not (gene in geneIntList):
             print("\tGene %s removed - not interesting." %(gene))
-        if(len(snpList >= 1000)):
+        if(len(snpList) >= 1000):
             print("\tGene %s removed - too many SNPs for MONSTER" %(gene))
         
         #if(str(gene) in examine):
