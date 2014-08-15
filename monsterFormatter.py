@@ -25,6 +25,8 @@ indDict.put("0", 0)
 famDict = idTable()
 famDict.put("0", 0)
 
+MAXSNPSET = 10000
+
 def autoCall(caseFilepath, contFilepath, kicFilepath, mapFilepath, selectedControlsList):
     [selectedCases, selectedControls] = loadCC(caseFilepath, contFilepath, selectedControlsList)
     return(main(selectedCases, selectedControls, kicFilepath, mapFilepath))
@@ -75,40 +77,13 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     pedFile.close()
     phenoFile.close()
     
-    '''
-    #genotypye file
-    print("Creating genotype file")
-    doseFile = open(doseFilePath)
-    genFile = open(genFilePath, "w+")
-    header = next(doseFile).strip().split(",")
-    newHeader = [0]
-    goodCols = [0]
-    for i,col in enumerate(header):
-        if(col in selected):
-            newHeader.append(indDict.getIID(col))
-            goodCols.append(i)
-
-    newHeader, goodCols = (list(x) for x in zip(*sorted(zip(newHeader, goodCols))))
-    newHeader = [str(i) for i in newHeader]
-    
-    genFile.write("\t".join(newHeader) + "\n")
-    for line in doseFile:
-        line = line.strip().split(",")
-        #ask burcu about this
-        if not(len(line)==799):  
-            newLine = [line[col] for col in goodCols]
-            genFile.write("\t".join(newLine) + "\n")
-    doseFile.close()
-    genFile.close()
-    '''
-    
     examine = ["FAM131A;EIF4G1"]
     
     #SNP map file
     geneMap = dict()
     geneInteresting = dict()
     geneIntList = set()
-    print("Creating SNP file")
+    print("Loading SNP information")
     mapFile = open(mapFilePath)
     SNPFile = open(SNPFilePath, "w+")
     
@@ -121,12 +96,12 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             newHeader.append(indDict.getIID(col))
             goodCols.append(i)
     
-    print("sorting")
+    #print("sorting")
     newHeader, goodCols = (list(x) for x in zip(*sorted(zip(newHeader, goodCols))))
     newHeader = [str(i) for i in newHeader]
     
     #goodCols = goodCols[]
-    
+    print("Creating genotype file")
     genFile = open(genFilePath, "w+")
     genFile.write("\t".join(newHeader) + "\n")
     lc = 0
@@ -169,28 +144,20 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
     naughtyList = ["SNORA62", "RBM15B;MANF", "MIR6824", "MAGI1", "PCBP4;ABHD14B", "MBNL1", "MLH1;MLH1",
                    "EIF4E3;GPR27", "FRG2C", "ZNF717", "TRAIP;CAMKV", "SCARNA7", "IQCF5", "EPHA3"]
     
+    print("Creating SNP file - excluding genes with no variation and with more than %s SNPs" %(MAXSNPSET))
     for gene,snpList in geneMap.iteritems():
         geneListFile.write(str(count) + "," + str(gene) +"\n")
         count += 1
         geneString = str(gene) + "\t0"
-        #if(gene in naughtyList):
-        #    #print(",".join(snpList))
-        #if((len(snpList) < 1000) and not(gene in naughtyList)):
-        if((len(snpList) < 1000) and (gene in geneIntList)):
-            #geneString += "\t".join(snpList)
+        if((len(snpList) < MAXSNPSET) and (gene in geneIntList)):
             for snp in snpList:
                 geneString += "\t" + snp
             geneString += "\n"
             SNPFile.write(geneString)
-        #lets get to the bottom of the naughtiness
         if not (gene in geneIntList):
             print("\tGene %s removed - not interesting." %(gene))
-        if(len(snpList) >= 1000):
+        if(len(snpList) >= MAXSNPSET):
             print("\tGene %s removed - too many SNPs for MONSTER" %(gene))
-        
-        #if(str(gene) in examine):
-        #    print("snp file:")
-        #    print(geneString)
     geneListFile.close()
     SNPFile.close()
     
@@ -216,8 +183,6 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
 def convertLD(lineData):
     for i in xrange(1,4):
         newID = indDict.getIID(lineData[i])
-        #if(newID == 37):
-        #    print(lineData[i])
         lineData[i] = str(newID)
         
 def loadCC(caseFilepath, contFilepath, selectedControlsList):
@@ -236,7 +201,6 @@ def loadCC(caseFilepath, contFilepath, selectedControlsList):
         lineData = line.strip().split("\t")
         if lineData[1] in selectedControlsList:
             selectedControls.update({lineData[1] : lineData[2:len(lineData)-1]})
-    #selected = selectedCases.keys() + selectedControls.keys()
     
     caseFile.close()
     contFile.close()
