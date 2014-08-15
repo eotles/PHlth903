@@ -145,9 +145,9 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
                 #print(dose)
                 #lc+=1
             genFile.write("\t".join(dose) + "\n")
-            if(lineData[823] in examine):
-                print("genFile:")
-                print(dose)
+            #if(lineData[823] in examine):
+            #    print("genFile:")
+            #    print(dose)
             #print(newLine)
             gene = str(lineData[823])
             snp = str(lineData[1] + "_" + lineData[2])
@@ -184,11 +184,13 @@ def main(selectedCases, selectedControls, kicFilepath, mapFilepath):
             SNPFile.write(geneString)
         #lets get to the bottom of the naughtiness
         if not (gene in geneIntList):
-            print("\tGene %s not interesting" %(gene))
+            print("\tGene %s removed - not interesting." %(gene))
+        if(len(snpList >= 1000)):
+            print("\tGene %s removed - too many SNPs for MONSTER" %(gene))
         
-        if(str(gene) in examine):
-            print("snp file:")
-            print(geneString)
+        #if(str(gene) in examine):
+        #    print("snp file:")
+        #    print(geneString)
     geneListFile.close()
     SNPFile.close()
     
